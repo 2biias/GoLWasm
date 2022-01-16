@@ -6,7 +6,6 @@
 #include <iterator>
 #include <iostream>
 #include <algorithm>
-#include <experimental/memory_resource>
 
 #include <gameEngine/gameComponent.hpp>
 #include <utilities/math/vector2d.hpp>
@@ -27,13 +26,13 @@ class CellManager : public GameEngine::GameComponent, public std::enable_shared_
 public:
     using PosToCellStateMap = std::map<std::pair<int,int>, CellState>;
     using PosToCell = std::map<std::pair<int,int>, std::shared_ptr<Cell<Engine>>>;
-    using CellAllocator = std::experimental::pmr::polymorphic_allocator<std::byte>;
+    //using CellAllocator = std::experimental::pmr::polymorphic_allocator<std::byte>;
 
     CellManager(Engine& engine, const uint32_t cellsPrAxis, const uint32_t cellSize) 
     :   engine_(engine),
         cellSize_(cellSize),
         cellsPrAxis_(cellsPrAxis),
-        numberOfCells_(cellsPrAxis*cellsPrAxis) //cellResource_(&pool_) ,pool_(internal_buffer_.data(), internal_buffer_.size())
+        numberOfCells_(cellsPrAxis*cellsPrAxis)
     {
         initializeCells();
     }
@@ -44,13 +43,12 @@ public:
 
     void update() {
         if(started_ == true) {
-                //auto start = std::chrono::high_resolution_clock::now();
-                //cellAlgo_.doParallel(currentGen_, nextGen_);
+                #ifdef __EMSCRIPTEN__
                 cellAlgo_.doSingle(currentGen_, nextGen_);
-                //auto end = std::chrono::high_resolution_clock::now();
-                //auto duration = std::chrono::duration_cast<std::chrono::microseconds>(end - start).count();
-                //std::cout << "duration: " << duration << "us" << std::endl;
-
+                #else
+                cellAlgo_.doParallel(currentGen_, nextGen_);
+                #endif
+                
                 updateCellObjects();
 
                 currentGen_.clear();
@@ -78,7 +76,6 @@ public:
         for(auto& [pos, state] : currentGen_) {
             if(nextGen_[pos] != state)  {
                 if(nextGen_[pos] == CellState::alive) {
-                    //posToCell_.insert(std::make_pair(pos, std::allocate_shared<Cell<Engine>, CellAllocator>(&cellResource_, engine_, Math::Vector2D(pos), cellSize_)));
                     posToCell_.insert(std::make_pair(pos, std::make_shared<Cell<Engine>>(engine_, Math::Vector2D(pos), cellSize_)));
                     posToCell_[pos]->registerInEngine();
                 } else {
@@ -105,7 +102,6 @@ public:
         auto cellPos = std::make_pair(cellNumX, cellNumY);
         if(currentGen_[cellPos] == CellState::dead) {
             currentGen_[cellPos] = CellState::alive;
-            //posToCell_.insert(std::make_pair(cellPos, std::allocate_shared<Cell<Engine>, CellAllocator>(&cellResource_, engine_, Math::Vector2D(cellPos), cellSize_)));
             posToCell_.insert(std::make_pair(cellPos, std::make_shared<Cell<Engine>>(engine_, Math::Vector2D(cellPos), cellSize_)));
             posToCell_[cellPos]->registerInEngine();
         } else {                                
@@ -144,10 +140,6 @@ private:
     uint32_t tickCount_ = 0;
     uint32_t genNumber_ = 0;
     bool started_ = false;
-
-    std::array<std::byte, CELLSPRAXIS*CELLSPRAXIS*96> internal_buffer_;
-    //std::pmr::monotonic_buffer_resource pool_;
-    //Resource::WatermarkResource cellResource_;
 
     Algorithm::GameOfLifeAlgorithm cellAlgo_;
     PosToCellStateMap currentGen_;

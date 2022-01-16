@@ -56,10 +56,7 @@ public:
     }
 
     void setupEvents() {
-        /* be carefull with lifetime, if event object dies the eventHandler will call uknonwn reference
-        scooped connection could be used
-        boost::signals2::scoped_connection start_connect = engine_.getEventHandler()->addEventHandler(startButton_->getStartEvent(),*start_);
-        would only work in setupEvents() scope  */
+        
         auto eventHandler = engine_.getEventHandler();
 
         eventHandler->addAllowedEvents(SDL_MOUSEBUTTONDOWN, SDL_MOUSEBUTTONUP, SDL_QUIT, SDL_USEREVENT);

@@ -1,21 +1,36 @@
-# GameOfLife written in C++ to be compiled into WebAssembly using Emscripten
+# GameOfLife written in C++
+# Compilable to WebAssembly using Emscripten
+# Can also be compiled to run natively (use cmake)
 
-To build and run:
+To build and run in the browser:
 
-Install SDL: 
-- sudo apt-get install -y libsdl2-dev libsdl2-ttf-dev
+Install emsdk : 
+# Get the emsdk repo
+- git clone https://github.com/emscripten-core/emsdk.git
 
-Run Cmake:
-- cd build
-- cmake ..
+# Enter that directory
+- cd emsdk
 
-Build (from build folder):
-- make
+# Fetch the latest version of the emsdk (not needed the first time you clone)
+- git pull
+
+# Download and install the latest SDK tools.
+- ./emsdk install latest
+
+# Make the "latest" SDK "active" for the current user. (writes .emscripten file)
+- ./emsdk activate latest
+
+# Activate PATH and other environment variables in the current terminal
+- source ./emsdk_env.sh
+
+Build (from root folder):
+# Run the command below to build emrun version. Remove --emrun to build for normal use. 
+- emcc src/main.cpp -std=c++20 -Iinclude/ -fexceptions -s USE_SDL=2 --preload-file resources -o gol.html -s ALLOW_MEMORY_GROWTH=1 \
+-s USE_SDL_TTF=2 -s USE_BOOST_HEADERS=1 --emrun
 
 Run program (from root folder):
-- cd to root folder
-- ./build/GameOfLife
-
+# Run with a browser of your choice. To run in firefox:
+- emrun --browser firefox gol.html 
 
 Play the game:
 - place a cell by clicking on the grid and remove by clicking the live cell

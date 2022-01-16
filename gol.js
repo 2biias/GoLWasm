@@ -203,7 +203,7 @@ var objAssign = Object.assign;
     }
   
    }
-   loadPackage({"files": [{"filename": "/resources/OpenSans-Regular.ttf", "start": 0, "end": 217360}], "remote_package_size": 217360, "package_uuid": "a72d013c-df2b-49e8-a44d-d596d987af5b"});
+   loadPackage({"files": [{"filename": "/resources/OpenSans-Regular.ttf", "start": 0, "end": 217360}], "remote_package_size": 217360, "package_uuid": "6dc1b1f3-18af-4093-8570-5ab6388939e7"});
   
   })();
   
