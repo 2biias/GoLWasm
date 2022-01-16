@@ -35,6 +35,11 @@
 *.exe
 *.out
 *.app
+*.wasm
+*.js
+
+# emcc
+*.data
 
 ### CMake ###
 CMakeLists.txt.user
@@ -94,8 +99,6 @@ flycheck_*.el
 # server auth directory
 /server/
 
-# projectiles files
-.projectile
 
 # directory configuration
 .dir-locals.el
