@@ -44,13 +44,11 @@ public:
 
     void update() {
         if(started_ == true) {
-            if(tickCount_++ >= 1) {
-
-                auto start = std::chrono::high_resolution_clock::now();
-                cellAlgo_.doParallel(currentGen_, nextGen_);
-                //cellAlgo_.doSingle(currentGen_, nextGen_);
-                auto end = std::chrono::high_resolution_clock::now();
-                auto duration = std::chrono::duration_cast<std::chrono::microseconds>(end - start).count();
+                //auto start = std::chrono::high_resolution_clock::now();
+                //cellAlgo_.doParallel(currentGen_, nextGen_);
+                cellAlgo_.doSingle(currentGen_, nextGen_);
+                //auto end = std::chrono::high_resolution_clock::now();
+                //auto duration = std::chrono::duration_cast<std::chrono::microseconds>(end - start).count();
                 //std::cout << "duration: " << duration << "us" << std::endl;
 
                 updateCellObjects();
@@ -60,7 +58,6 @@ public:
 
                 tickCount_ = 0;
                 genNumber_++;
-            }
         }
     }
 

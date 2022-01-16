@@ -1,4 +1,4 @@
-# APK - Gruppe 6 - GameOfLife
+# GameOfLife written in C++ to be compiled into WebAssembly using Emscripten
 
 To build and run:
 
