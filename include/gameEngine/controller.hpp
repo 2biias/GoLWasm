@@ -41,7 +41,7 @@ public:
         #ifdef __EMSCRIPTEN__
         Callback<void (void)>::func = std::bind(&Controller::run, this);
         callback_t func = static_cast<callback_t>(Callback<void (void)>::callback);
-        emscripten_set_main_loop(func, -1, 10);
+        emscripten_set_main_loop(func, -1, 3);
         #else
         while(running_ == true) {
             run();
