@@ -25,8 +25,7 @@ Activate PATH and other environment variables in the current terminal
 
 ### Build (from root folder):
 Run the command below to build emrun version. Remove --emrun to build for normal use. 
-- emcc src/main.cpp -std=c++20 -Iinclude/ -fexceptions -s USE_SDL=2 --preload-file resources -o gol.html -s ALLOW_MEMORY_GROWTH=1 \
--s USE_SDL_TTF=2 -s USE_BOOST_HEADERS=1 --emrun
+- emcc src/main.cpp -std=c++20 -Iinclude/ -fexceptions -s USE_SDL=2 --preload-file resources -o gol.html -s ALLOW_MEMORY_GROWTH=1 -s USE_SDL_TTF=2 -s USE_BOOST_HEADERS=1 --emrun
 
 ### Run program (from root folder):
 Run with a browser of your choice. To run in firefox:
