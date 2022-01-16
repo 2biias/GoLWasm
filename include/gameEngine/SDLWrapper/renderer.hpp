@@ -21,7 +21,7 @@ public:
     {
         if(renderer_ == nullptr)
             throw std::runtime_error(std::string("Failed to create renderer ") + SDL_GetError());
-        font_ = TTF_OpenFont("resources/OpenSans-Regular.ttf", 24);
+        font_ = TTF_OpenFont("./resources/OpenSans-Regular.ttf", 24);
         if(font_ == nullptr)
             std::cout << "ooooh" << std::endl;
     }
