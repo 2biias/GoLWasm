@@ -37,22 +37,22 @@ public:
     {}
 
     void start() {
+        
+        #ifdef __EMSCRIPTEN__
         Callback<void (void)>::func = std::bind(&Controller::run, this);
         callback_t func = static_cast<callback_t>(Callback<void (void)>::callback);
         emscripten_set_main_loop(func, -1, 1);
+        #else
+        while(running_ == true) {
+            run();
+            tick();
+        }
+        #endif
     }
 
     void run() {
-        /*
-        while(running_)
-        {
-            engine_.update();
-            engine_.render();
-            tick();
-        }*/
         engine_.update();
         engine_.render();
-        tick();
     }
 
     void tick() { SDL_Delay(GAME_TICK_MS); }
