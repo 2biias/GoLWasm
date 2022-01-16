@@ -32,5 +32,5 @@ Run with a browser of your choice. To run in firefox:
 - emrun --browser firefox gol.html 
 
 ### Play the game:
-- place a cell by clicking on the grid and remove by clicking the live cell
-- start/pause and reset the game by using the buttons
+- Place a cell by clicking on the grid and remove by clicking the live cell.
+- Start/pause and reset the game by using the buttons.
